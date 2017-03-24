@@ -138,7 +138,7 @@ def getAlbums(email):
 
 def test():
     if False:
-        entries = getAlbums(email="kevin.osborn@gmail.com")
+        entries = getAlbums(email="ucreate.studio@gmail.com")
     else:
         entries = map(str, range(1000))
 
@@ -154,5 +154,5 @@ if __name__ == '__main__':
         if sys.argv[1] == 'gui':
             test()
     else:
-        for l in getAlbums(email="kevin.osborn@gmail.com"):
+        for l in getAlbums(email="ucreate.studio@gmail.com"):
             print l
