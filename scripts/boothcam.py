@@ -100,12 +100,6 @@ def snap(can, countdown1, effect='None'):
     global image_idx
 
     try:
-        if custom.ARCHIVE and os.path.exists(custom.archive_dir) and os.path.exists(custom.PROC_FILENAME):
-            ### copy image to archive
-            image_idx += 1
-            new_filename = os.path.join(custom.archive_dir, '%s_%05d.%s' % (custom.PROC_FILENAME[:-4], image_idx, custom.EXT))
-            command = (['cp', custom.PROC_FILENAME, new_filename])
-            call(command)
         camera = mycamera.PiCamera()
         countdown(camera, can, countdown1)
         if effect == 'None':
@@ -145,8 +139,7 @@ def snap(can, countdown1, effect='None'):
             snapshot.paste(Image.open(custom.RAW_FILENAME[:-4] + '_4.' + custom.EXT).resize((683, 384)), (683, 384, 1366, 768))
             
         camera.close()
-            
-    
+
         if custom.logo is not None:
             # snapshot.paste(logo,(0,SCREEN_H -lysize ),logo)
             # snapshot.paste(custom.logo,(SCREEN_W/2 - custom.logo.size[0]/2,
@@ -159,6 +152,13 @@ def snap(can, countdown1, effect='None'):
             snapshot.paste(custom.logo,(xoff, yoff),
                            custom.logo)
         snapshot.save(custom.PROC_FILENAME)
+
+        if custom.ARCHIVE and os.path.exists(custom.archive_dir) and os.path.exists(custom.PROC_FILENAME):
+            ### copy image to archive
+            image_idx += 1
+            new_filename = os.path.join(custom.archive_dir, '%s_%05d.%s' % (custom.PROC_FILENAME[:-4], image_idx, custom.EXT))
+            command = (['cp', custom.PROC_FILENAME, new_filename])
+            call(command)
     except Exception, e:
         print e
         snapshot = None
