@@ -153,12 +153,24 @@ def snap(can, countdown1, effect='None'):
                            custom.logo)
         snapshot.save(custom.PROC_FILENAME)
 
-        if custom.ARCHIVE and os.path.exists(custom.archive_dir) and os.path.exists(custom.PROC_FILENAME):
-            ### copy image to archive
+        # archive images
+        if custom.ARCHIVE and os.path.exists(custom.archive_dir):
             image_idx += 1
-            new_filename = os.path.join(custom.archive_dir, '%s_%05d.%s' % (custom.PROC_FILENAME[:-4], image_idx, custom.EXT))
-            command = (['cp', custom.PROC_FILENAME, new_filename])
-            call(command)
+            
+            # try archiving raw image
+            raw_directory = os.path.join(custom.archive_dir, 'Raw')
+            if os.path.exists(raw_directory) and os.path.exists(custom.RAW_FILENAME):
+                new_filename = os.path.join(raw_directory, '%s_%05d.%s' % (custom.RAW_FILENAME[:-4], image_idx, custom.EXT))
+                command = (['cp', custom.RAW_FILENAME, new_filename])
+                call(command)
+
+            # try archiving processed image
+            processed_directory = os.path.join(custom.archive_dir, 'Processed')
+            if os.path.exists(processed_directory) and os.path.exists(custom.PROC_FILENAME):
+                new_filename = os.path.join(processed_directory, '%s_%05d.%s' % (custom.PROC_FILENAME[:-4], image_idx, custom.EXT))
+                command = (['cp', custom.PROC_FILENAME, new_filename])
+                call(command)
+
     except Exception, e:
         print e
         snapshot = None
@@ -168,11 +180,19 @@ snap.active = False
 
 if custom.ARCHIVE: ### commented out... use custom.customizer instead
     # custom.archive_dir = tkFileDialog.askdirectory(title="Choose archive directory.", initialdir='/media/')
+
     if not os.path.exists(custom.archive_dir):
         print 'Directory not found.  Not archiving'
         custom.ARCHIVE = False
-    elif not os.path.exists(custom.archive_dir): ## not used
-        os.mkdir(custom.archive_dir)
+    else:
+        raw_directory = os.path.join(custom.archive_dir, 'Raw')
+        if not os.path.exists(raw_directory):
+            os.mkdir(raw_directory)
+
+        processed_directory = os.path.join(custom.archive_dir, 'Processed')
+        if not os.path.exists(processed_directory):
+            os.mkdir(processed_directory)
+
     image_idx = len(glob.glob(os.path.join(custom.archive_dir, '%s_*.%s' % (custom.PROC_FILENAME[:-4], custom.EXT))))
 
 SERIAL = None
