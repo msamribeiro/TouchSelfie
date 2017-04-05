@@ -193,7 +193,7 @@ if custom.ARCHIVE: ### commented out... use custom.customizer instead
         if not os.path.exists(processed_directory):
             os.mkdir(processed_directory)
 
-    image_idx = len(glob.glob(os.path.join(custom.archive_dir, '%s_*.%s' % (custom.PROC_FILENAME[:-4], custom.EXT))))
+    image_idx = len(glob.glob(os.path.join(custom.archive_dir, 'Processed', '%s_*.%s' % (custom.PROC_FILENAME[:-4], custom.EXT))))
 
 SERIAL = None
 def findser():
