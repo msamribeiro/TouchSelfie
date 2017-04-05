@@ -8,6 +8,7 @@ WyoLum.com
 ## imports
 from tkkb import Tkkb
 import time
+import sys
 from Tkinter import *
 import tkMessageBox
 import ImageTk
@@ -24,7 +25,12 @@ root.attributes("-fullscreen",True)
 def screenshot(*args):
     import screenshot
     screenshot.snap()
+
+def quit_booth(*args):
+    sys.exit(0)
+
 root.bind('<F12>', screenshot)
+root.bind('<F4>', quit_booth)
 
 ### booth cam may need to present a file dialog gui.  So import after root is defined.
 from boothcam import *
