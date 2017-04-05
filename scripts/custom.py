@@ -41,8 +41,8 @@ oauth2_refresh_period = 1800000
     conf = ConfigParser.ConfigParser()
     conf.read(conf_filename)
 
-    emailSubject = conf.get('main', 'emailSubject') # "Your Postcard from the Wyolum Photobooth"
-    emailMsg = conf.get('main', 'emailMsg') # "Here's your picture from the http://wyolum.com photobooth!"
+    emailSubject = conf.get('main', 'emailSubject') # "Your Postcard from the uCreateStudio Photobooth"
+    emailMsg = conf.get('main', 'emailMsg') # "Here's your picture from the uCreateStudio photobooth!"
     logopng = conf.get('main', 'logopng') # "logo.png"
 
     if os.path.exists(logopng):
@@ -268,7 +268,7 @@ def customize(master):
         archive_var.set(archive_dir)
     def launch_album_select(*args):
         if not hasattr(self, 'albums'):
-            self.albums = listalbums.getAlbums("kevin.osborn@gmail.com")
+            self.albums = listalbums.getAlbums("email.adress")
         listalbums.AlbumSelect(self, self.album_entry, self.albums)
         
     string_customizer('Email Subject', emailSubject, update_subj)
@@ -333,8 +333,3 @@ if __name__ == '__main__':
     print ARCHIVE
     print archive_dir
     print logopng
-    
-
-
-
-    
