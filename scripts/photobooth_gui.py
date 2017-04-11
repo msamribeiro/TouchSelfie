@@ -26,11 +26,7 @@ def screenshot(*args):
     import screenshot
     screenshot.snap()
 
-def quit_booth(*args):
-    sys.exit(0)
-
 root.bind('<F12>', screenshot)
-root.bind('<F4>', quit_booth)
 
 ### booth cam may need to present a file dialog gui.  So import after root is defined.
 from boothcam import *
@@ -295,11 +291,12 @@ root.geometry("%dx%d+0+0" % (WIDTH, HEIGHT))
 root.focus_set() # <-- move focus to this widget
 frame = Frame(root)
 
-# Button(frame, text="Exit", command=on_close).pack(side=LEFT)
+
 Button(frame, text="Customize", command=lambda *args: custom.customize(root)).pack(side=LEFT)
 tkkb_button = Button(frame, command=launch_tkkb, text="Launch-KB")
-# tkkb_button.pack(side=LEFT)
-send_button = Button(frame, text="SendEmail", command=sendPic, font=custom.BUTTON_FONT)
+tkkb_button.pack(side=LEFT)
+Button(frame, text="Exit", command=on_close).pack(side=RIGHT)
+send_button = Button(frame, text="SendEmail", command=sendPic) #, font=custom.BUTTON_FONT)
 send_button.pack(side=RIGHT)
 
 if custom.TIMELAPSE > 0:
